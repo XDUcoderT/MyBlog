@@ -1,6 +1,5 @@
 ---
 title: mysql日志
-permalink: /post/mysql-log-z2diocn.html
 date: 2023-01-09 13:30:34
 meta:
   - name: keywords

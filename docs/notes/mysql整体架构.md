@@ -1,6 +1,5 @@
 ---
 title: mysql整体架构
-permalink: /post/mysql-overall-architecture-z1k0unn.html
 date: 2023-01-04 22:33:39
 meta:
   - name: keywords

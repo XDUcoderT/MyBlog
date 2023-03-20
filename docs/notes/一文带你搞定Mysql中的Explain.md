@@ -1,6 +1,5 @@
 ---
 title: 一文带你搞定Mysql中的Explain
-permalink: /post/undefined.html
 date: 2023-01-04 22:37:25
 meta:
   - name: keywords

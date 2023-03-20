@@ -1,6 +1,5 @@
 ---
 title: mysql的并发控制
-permalink: /post/mysql-s-concurrent-control-z11rgjb.html
 date: 2023-01-17 19:39:02
 meta:
   - name: keywords
