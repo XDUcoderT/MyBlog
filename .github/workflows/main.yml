@@ -1,26 +1,43 @@
-name: Continuous Deploy #action名称
-on: [push] #在推送的时候运行此action
+name: Deploy My Server
 
+on:
+  push:
+    branches:
+      - main # 只在master上push触发部署
+      
 jobs:
-  deploy_job:
-    runs-on: ubuntu-latest  #运行环境
-    name: build
-    steps:
-      # check out the repository
-      - name: Checkout    
-        uses: actions/checkout@v2    #这里使用了github官方提供的action,checkout项目到虚拟机上
+  deploy:
+    runs-on: ubuntu-latest # 使用ubuntu系统镜像运行自动化脚本
 
-      - name: Install Dependencies
-        run: yarn
+    steps: # 自动化步骤
+    
+      #下载代码仓库
+      - uses: actions/checkout@v1 
+      
+      # 使用action库，安装node
+      - name: use Node.js  # 使用action库  actions/setup-node安装node
+        uses: actions/setup-node@v1
+       
+      # 安装依赖
+      - name: npm install 
+        run: npm install 
+      
+      #打包项目
       - name: Build
-        run: yarn build
+        run: npm run build 
 
-      # 利用action把build好的文件上传到服务器/var/www/react-app路径下,需要确认此目录已在服务端创建
-      - name: deploy file to server
-        uses: wlixcc/SFTP-Deploy-Action@v1.0 
-        with:  
-          username: 'root'   #ssh user name
-          server: '${{ secrets.SERVER_IP }}' #引用之前创建好的secret
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} #引用之前创建好的secret
-          local_path: './build/*'  # 对应我们项目build的文件夹路径
-          remote_path: '/blog'
+      #部署到服务器
+      - name: Deploy to Staging My server
+        uses: easingthemes/ssh-deploy@v2.1.6
+        env:
+          #私钥
+          SSH_PRIVATE_KEY: tc20032003 #后面指定为该仓库配置的私钥
+          # 源目录，编译后生成的文件目录
+          SOURCE: '/public/'
+          #服务器公网地址
+          REMOTE_HOST: '47.109.37.170'
+          #服务器用户名-一般默认root
+          REMOTE_USER: 'root'
+          #服务器中，代码部署的位置
+          TARGET: '/blog'
+ 
